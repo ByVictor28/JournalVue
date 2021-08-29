@@ -10,7 +10,13 @@ export default {
     {
       path:":idEntry",
       name:"entry",
-      component:()=>import(/* webpackChunkName: "Entry" */ "../views/EntrySelected.vue")
+      component:()=>import(/* webpackChunkName: "Entry" */ "../views/EntrySelected.vue"),
+      props:(route) => {
+        return{
+          idEntry:route.params.idEntry
+        }
+         
+      }
     }
   ]
 }

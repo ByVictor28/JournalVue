@@ -1,20 +1,40 @@
 <template>
   <div class="entry-list-container">
     <div class="px-2 pt-2">
-      <input type="text" class="form-control" placeholder="Buscar entrada">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar entrada"
+        v-model="search"
+      >
     </div>
     <div class="entry-scrollarea">
-      <Entry v-for="(item, index) in 100" :key="index"/>
+      <Entry 
+        v-for="(entry, index) in getEntries" 
+        :key="index"
+        :entry="entry"
+        />
     </div>
   </div>
 </template>
 
 <script>
 import { defineAsyncComponent } from '@vue/runtime-core'
-
+import {mapGetters} from 'vuex'
 export default {
+  data(){
+    return{
+      search:""
+    }
+  },
   components:{
     Entry: defineAsyncComponent(()=> import("./Entry.vue")),
+  },
+  computed:{
+    ...mapGetters("daybook",["getEntriesByTerm"]),
+    getEntries(){
+      return this.getEntriesByTerm(this.search)
+    }
   }
 }
 </script>
